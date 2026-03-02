@@ -207,7 +207,7 @@ function resolveRound(room: Room, io: Server): void {
     if (room.status === "playing") {
       startRound(room, io);
     }
-  }, 3000);
+  }, 10000);
 }
 
 function endGame(room: Room, io: Server): void {

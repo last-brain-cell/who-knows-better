@@ -35,19 +35,27 @@ app.post("/api/rooms", async (req, res) => {
   const code = generateRoomCode();
   const room = createRoom(code, topic, subtopic || "", "");
 
-  // Generate facts asynchronously
-  try {
-    const allFacts = await generateFacts(topic, subtopic || "");
-    const { gameplay, backup } = sortFactsByDifficulty(allFacts);
-    room.facts = gameplay;
-    room.backupFacts = backup;
-  } catch (error) {
-    console.error("Failed to generate facts:", error);
-    res.status(500).json({ error: "Failed to generate facts" });
-    return;
-  }
-
+  // Respond immediately, generate facts in background
   res.json({ code, topic, subtopic: subtopic || "" });
+
+  generateFacts(topic, subtopic || "")
+    .then((allFacts) => {
+      const { gameplay, backup } = sortFactsByDifficulty(allFacts);
+      room.facts = gameplay;
+      room.backupFacts = backup;
+      room.factsReady = true;
+      console.log(`Facts ready for room ${code}`);
+
+      // If 2 players are already waiting, start the game now
+      if (room.status === "waiting" && room.players.size === 2) {
+        startGame(room, io);
+      }
+    })
+    .catch((error) => {
+      console.error(`Failed to generate facts for room ${code}:`, error);
+      // Notify players in the room that fact generation failed
+      io.to(`room:${code}`).emit("room_error", "Failed to generate facts. Please create a new room.");
+    });
 });
 
 app.get("/api/rooms/:code", (req, res) => {
@@ -152,12 +160,17 @@ io.on("connection", (socket) => {
         }
       }
 
-      // Start game after short delay
-      setTimeout(() => {
-        if (room.status === "waiting" && room.players.size === 2) {
-          startGame(room, io);
-        }
-      }, 1500);
+      if (room.factsReady) {
+        // Facts already generated, start game after short delay
+        setTimeout(() => {
+          if (room.status === "waiting" && room.players.size === 2) {
+            startGame(room, io);
+          }
+        }, 1500);
+      } else {
+        // Facts still loading, notify both players
+        io.to(`room:${room.code}`).emit("facts_loading");
+      }
     }
   });
 

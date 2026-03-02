@@ -37,6 +37,7 @@ export interface Room {
   players: Map<string, PlayerState>;
   facts: Fact[];
   backupFacts: Fact[];
+  factsReady: boolean;
   currentRound: number;
   totalRounds: number;
   answers: Map<string, PlayerAnswer>;

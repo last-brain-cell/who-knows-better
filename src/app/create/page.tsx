@@ -181,7 +181,7 @@ export default function CreatePage() {
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 className="inline-block h-5 w-5 rounded-full border-2 border-bg border-t-transparent"
               />
-              Generating facts...
+              Getting things ready...
             </span>
           ) : (
             "CREATE ROOM"

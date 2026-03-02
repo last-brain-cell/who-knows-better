@@ -26,6 +26,7 @@ export function createRoom(code: string, topic: string, subtopic: string, hostId
     players: new Map(),
     facts: [],
     backupFacts: [],
+    factsReady: false,
     currentRound: 0,
     totalRounds: 10,
     answers: new Map(),

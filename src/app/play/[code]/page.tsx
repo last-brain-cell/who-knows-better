@@ -54,6 +54,7 @@ export default function PlayPage() {
   const [phase, setPhase] = useState<GamePhase>("connecting");
   const [roomInfo, setRoomInfo] = useState<RoomInfo | null>(null);
   const [opponentConnected, setOpponentConnected] = useState(false);
+  const [factsLoading, setFactsLoading] = useState(false);
   const [countdown, setCountdown] = useState(3);
   const [currentFact, setCurrentFact] = useState("");
   const [roundNum, setRoundNum] = useState(0);
@@ -74,6 +75,7 @@ export default function PlayPage() {
 
   const factDisplayedAtRef = useRef<number>(0);
   const timer = useTimer(20000);
+  const resultTimer = useTimer(10000);
 
   const getOpponentId = useCallback(() => {
     if (!roomInfo || !roundResult) return null;
@@ -114,7 +116,12 @@ export default function PlayPage() {
       setOpponentConnected(true);
     }));
 
+    cleanups.push(on("facts_loading", () => {
+      setFactsLoading(true);
+    }));
+
     cleanups.push(on("game_start", (cd: number) => {
+      setFactsLoading(false);
       setPhase("countdown");
       setCountdown(cd);
       let c = cd;
@@ -160,6 +167,8 @@ export default function PlayPage() {
 
     cleanups.push(on("round_result", (result: RoundResultData) => {
       timer.stop();
+      resultTimer.reset();
+      resultTimer.start();
       setRoundResult(result);
       setPhase("result");
 
@@ -221,6 +230,7 @@ export default function PlayPage() {
       setStreak(0);
       setRoundResult(null);
       setFinalReport(null);
+      setFactsLoading(false);
     }));
 
     return () => cleanups.forEach((c) => c());
@@ -371,6 +381,17 @@ export default function PlayPage() {
                 <span className="pulse-dot h-2 w-2 rounded-full bg-primary" />
                 <span className="pulse-dot h-2 w-2 rounded-full bg-primary" />
               </span>
+            </div>
+          )}
+
+          {opponentConnected && factsLoading && (
+            <div className="flex items-center justify-center gap-2">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="h-4 w-4 rounded-full border-2 border-primary border-t-transparent"
+              />
+              <p className="text-muted">Getting things ready...</p>
             </div>
           )}
         </motion.div>
@@ -590,6 +611,19 @@ export default function PlayPage() {
                 {oppId ? roundResult.scores[oppId] : 0}
               </span>
             </span>
+          </div>
+
+          {/* Countdown to next round */}
+          <div className="mt-6">
+            <p className="mb-2 text-sm text-muted">Next round in {resultTimer.seconds}s</p>
+            <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
+              <motion.div
+                className="h-full rounded-full bg-muted"
+                initial={{ width: "100%" }}
+                animate={{ width: `${resultTimer.progress * 100}%` }}
+                transition={{ duration: 0.1, ease: "linear" }}
+              />
+            </div>
           </div>
         </motion.div>
       </div>

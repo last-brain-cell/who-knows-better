@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     title: "Think you know better? I dare you.",
     description: "1v1 trivia duels. Pick a topic. Share a code. Settle it.",
     type: "website",
+    images: ["/og-home.jpg"],
   },
 };
 

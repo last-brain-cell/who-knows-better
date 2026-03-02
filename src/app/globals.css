@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #0A0A0F;
+  --color-surface: #1A1A2E;
+  --color-surface-light: #252540;
+  --color-primary: #FACC15;
+  --color-secondary: #818CF8;
+  --color-correct: #34D399;
+  --color-wrong: #F87171;
+  --color-text: #F8FAFC;
+  --color-muted: #64748B;
+  --color-background: #0A0A0F;
+  --color-foreground: #F8FAFC;
+}
+
+@font-face {
+  font-family: 'ClashDisplay';
+  src: url('/fonts/ClashDisplay-Variable.woff2') format('woff2');
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Ambient grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(250, 204, 21, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 204, 21, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Glow effects */
+.glow-primary {
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.2), 0 0 60px rgba(250, 204, 21, 0.1);
+}
+
+.glow-correct {
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.3), 0 0 60px rgba(52, 211, 153, 0.15);
+}
+
+.glow-wrong {
+  box-shadow: 0 0 20px rgba(248, 113, 113, 0.3), 0 0 60px rgba(248, 113, 113, 0.15);
+}
+
+/* Timer bar color shift */
+.timer-bar {
+  transition: width 100ms linear;
+}
+
+.timer-bar[data-urgent="false"] {
+  background: var(--color-correct);
+}
+
+.timer-bar[data-urgent="caution"] {
+  background: var(--color-primary);
+}
+
+.timer-bar[data-urgent="true"] {
+  background: var(--color-wrong);
+}
+
+/* Typewriter cursor */
+.typewriter-cursor::after {
+  content: '|';
+  animation: blink 0.7s infinite;
+  color: var(--color-primary);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Pulse animation */
+@keyframes pulse-dot {
+  0%, 80%, 100% { transform: scale(0); opacity: 0; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.pulse-dot:nth-child(1) { animation: pulse-dot 1.4s infinite ease-in-out; }
+.pulse-dot:nth-child(2) { animation: pulse-dot 1.4s infinite ease-in-out 0.2s; }
+.pulse-dot:nth-child(3) { animation: pulse-dot 1.4s infinite ease-in-out 0.4s; }
+
+/* Screen shake */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.screen-shake {
+  animation: shake 0.5s ease-in-out;
+}

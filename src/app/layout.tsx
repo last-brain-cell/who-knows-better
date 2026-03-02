@@ -1,9 +1,21 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Orbitron, Rajdhani, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({
+const orbitron = Orbitron({
+  variable: "--font-display",
+  subsets: ["latin"],
+});
+
+const rajdhani = Rajdhani({
+  variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+});
+
+const spaceMono = Space_Mono({
   variable: "--font-mono",
+  weight: ["400", "700"],
   subsets: ["latin"],
 });
 
@@ -26,7 +38,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jetbrainsMono.variable} antialiased bg-bg text-text min-h-screen bg-grid`}
+        className={`${orbitron.variable} ${rajdhani.variable} ${spaceMono.variable} antialiased bg-bg text-text min-h-screen bg-grid scanlines`}
+        style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}
       >
         {children}
       </body>

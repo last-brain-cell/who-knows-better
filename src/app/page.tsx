@@ -23,7 +23,7 @@ export default function Home() {
         {Array.from({ length: 20 }).map((_, i) => (
           <motion.div
             key={i}
-            className="absolute h-1 w-1 rounded-full bg-primary/20"
+            className={`absolute h-1 w-1 rounded-full ${i % 2 === 0 ? "bg-primary/20" : "bg-secondary/20"}`}
             initial={{
               x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1000),
               y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
@@ -55,11 +55,11 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h1 className="text-6xl font-bold tracking-tight sm:text-7xl">
+          <h1 className="font-[family-name:var(--font-display)] text-6xl font-bold tracking-tight sm:text-7xl">
             <span className="text-text">WHO KNOWS</span>
             <br />
             <motion.span
-              className="text-primary"
+              className="text-primary text-neon-pink"
               animate={{ opacity: [1, 0.7, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >

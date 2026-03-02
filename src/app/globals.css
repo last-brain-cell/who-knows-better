@@ -1,24 +1,17 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg: #0A0A0F;
-  --color-surface: #1A1A2E;
-  --color-surface-light: #252540;
-  --color-primary: #FACC15;
-  --color-secondary: #818CF8;
-  --color-correct: #34D399;
-  --color-wrong: #F87171;
-  --color-text: #F8FAFC;
-  --color-muted: #64748B;
-  --color-background: #0A0A0F;
-  --color-foreground: #F8FAFC;
-}
-
-@font-face {
-  font-family: 'ClashDisplay';
-  src: url('/fonts/ClashDisplay-Variable.woff2') format('woff2');
-  font-weight: 200 700;
-  font-display: swap;
+  --color-bg:            #0D0221;
+  --color-background:    #0D0221;
+  --color-surface:       #1A0A3E;
+  --color-surface-light: #2D1B69;
+  --color-primary:       #FF2D95;
+  --color-secondary:     #00F0FF;
+  --color-correct:       #39FF14;
+  --color-wrong:         #FF4757;
+  --color-text:          #F0E6FF;
+  --color-foreground:    #F0E6FF;
+  --color-muted:         #7B6B99;
 }
 
 body {
@@ -28,25 +21,68 @@ body {
   overflow-x: hidden;
 }
 
-/* Ambient grid background */
+/* Synthwave perspective grid */
 .bg-grid {
   background-image:
-    linear-gradient(rgba(250, 204, 21, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(250, 204, 21, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(transparent 0%, transparent 45%, rgba(0, 240, 255, 0.07) 45.5%, transparent 46%),
+    linear-gradient(transparent 0%, transparent 55%, rgba(0, 240, 255, 0.07) 55.5%, transparent 56%),
+    linear-gradient(transparent 0%, transparent 65%, rgba(0, 240, 255, 0.07) 65.5%, transparent 66%),
+    linear-gradient(transparent 0%, transparent 75%, rgba(0, 240, 255, 0.07) 75.5%, transparent 76%),
+    linear-gradient(transparent 0%, transparent 82%, rgba(0, 240, 255, 0.07) 82.5%, transparent 83%),
+    linear-gradient(transparent 0%, transparent 88%, rgba(0, 240, 255, 0.07) 88.5%, transparent 89%),
+    linear-gradient(transparent 0%, transparent 93%, rgba(0, 240, 255, 0.07) 93.5%, transparent 94%),
+    linear-gradient(transparent 0%, transparent 97%, rgba(0, 240, 255, 0.07) 97.5%, transparent 98%),
+    linear-gradient(90deg, transparent 10%, rgba(0, 240, 255, 0.04) 10.5%, transparent 11%),
+    linear-gradient(90deg, transparent 25%, rgba(0, 240, 255, 0.04) 25.5%, transparent 26%),
+    linear-gradient(90deg, transparent 40%, rgba(0, 240, 255, 0.04) 40.5%, transparent 41%),
+    linear-gradient(90deg, transparent 50%, rgba(0, 240, 255, 0.04) 50.5%, transparent 51%),
+    linear-gradient(90deg, transparent 60%, rgba(0, 240, 255, 0.04) 60.5%, transparent 61%),
+    linear-gradient(90deg, transparent 75%, rgba(0, 240, 255, 0.04) 75.5%, transparent 76%),
+    linear-gradient(90deg, transparent 90%, rgba(0, 240, 255, 0.04) 90.5%, transparent 91%);
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+/* Scanline overlay */
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.08) 1px,
+    rgba(0, 0, 0, 0.08) 2px
+  );
+  z-index: 9999;
 }
 
 /* Glow effects */
 .glow-primary {
-  box-shadow: 0 0 20px rgba(250, 204, 21, 0.2), 0 0 60px rgba(250, 204, 21, 0.1);
+  box-shadow: 0 0 20px rgba(255, 45, 149, 0.3), 0 0 60px rgba(255, 45, 149, 0.15);
+}
+
+.glow-secondary {
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 60px rgba(0, 240, 255, 0.15);
 }
 
 .glow-correct {
-  box-shadow: 0 0 20px rgba(52, 211, 153, 0.3), 0 0 60px rgba(52, 211, 153, 0.15);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.3), 0 0 60px rgba(57, 255, 20, 0.15);
 }
 
 .glow-wrong {
-  box-shadow: 0 0 20px rgba(248, 113, 113, 0.3), 0 0 60px rgba(248, 113, 113, 0.15);
+  box-shadow: 0 0 20px rgba(255, 71, 87, 0.3), 0 0 60px rgba(255, 71, 87, 0.15);
+}
+
+/* Neon text utilities */
+.text-neon-pink {
+  text-shadow: 0 0 7px #FF2D95, 0 0 20px #FF2D95, 0 0 40px #FF2D95;
+}
+
+.text-neon-cyan {
+  text-shadow: 0 0 7px #00F0FF, 0 0 20px #00F0FF, 0 0 40px #00F0FF;
 }
 
 /* Timer bar color shift */
@@ -55,7 +91,7 @@ body {
 }
 
 .timer-bar[data-urgent="false"] {
-  background: var(--color-correct);
+  background: var(--color-secondary);
 }
 
 .timer-bar[data-urgent="caution"] {

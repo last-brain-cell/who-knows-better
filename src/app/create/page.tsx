@@ -62,7 +62,7 @@ export default function CreatePage() {
           >
             &larr; Back
           </button>
-          <h1 className="text-2xl font-bold tracking-tight">PICK YOUR ARENA</h1>
+          <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold tracking-tight">PICK YOUR ARENA</h1>
         </div>
 
         {/* Topic Grid */}

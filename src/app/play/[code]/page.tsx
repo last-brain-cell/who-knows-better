@@ -405,7 +405,7 @@ export default function PlayPage() {
       <div className="flex min-h-screen items-center justify-center">
         <motion.div
           key={countdown}
-          className="text-8xl font-bold text-primary"
+          className="font-[family-name:var(--font-display)] text-8xl font-bold text-primary"
           initial={{ scale: 2, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.5, opacity: 0 }}
@@ -560,7 +560,7 @@ export default function PlayPage() {
         >
           {/* Correct Answer */}
           <motion.h2
-            className={`mb-2 text-4xl font-bold ${roundResult.correctAnswer ? "text-correct" : "text-wrong"}`}
+            className={`font-[family-name:var(--font-display)] mb-2 text-4xl font-bold ${roundResult.correctAnswer ? "text-correct" : "text-wrong"}`}
             initial={{ y: -20 }}
             animate={{ y: 0 }}
           >
@@ -647,7 +647,7 @@ export default function PlayPage() {
         >
           {/* Result Header */}
           <motion.h1
-            className={`mb-8 text-center text-4xl font-bold ${isTie ? "text-primary" : iWon ? "text-correct" : "text-muted"}`}
+            className={`font-[family-name:var(--font-display)] mb-8 text-center text-4xl font-bold ${isTie ? "text-primary" : iWon ? "text-correct" : "text-muted"}`}
             initial={{ scale: 0.5 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", bounce: 0.5 }}
